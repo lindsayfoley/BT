@@ -1,9 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 
 const Header: FunctionComponent = () => (
-    <header>
-        <img src ="/images/bt-logo.jpg" alt="BT logo" />
-    </header>
-)
+  <header>
+    <img src="/images/bt-logo.jpg" alt="BT logo" />
+  </header>
+);
 
 export default Header;
