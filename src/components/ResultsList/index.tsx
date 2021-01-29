@@ -12,8 +12,8 @@ const ResultsList: FunctionComponent<IResultsListProps> = ({ list }) => {
 
   return (
     <section>
-      {list.map((article) => (
-        <ResultsCard {...article} />
+      {list.map((article, index) => (
+        <ResultsCard {...article} key={`${article.title}-${index}`} />
       ))}
     </section>
   );

@@ -1,38 +1,35 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
 import { IArticle } from '../ResultsCard';
 import ResultsList from '../ResultsList';
 
-const NEWS_API_URL = 'https://newsapi.org/v2';
+const NEWS_API_URL = 'https://newsapi.org/v2/';
 const API_KEY = '11e41bf5c1b548a29424441eeeaf3906';
+const MAX_RESULTS = 10;
 
 const getArticles = async (article: string) => {
   const response = await fetch(
-    `${NEWS_API_URL}/everything?q${article}&api${API_KEY}`
+    `${NEWS_API_URL}everything?q=${article}&apiKey=${API_KEY}&pageSize=${MAX_RESULTS}`
   );
   return await response.json();
 };
 
 const SearchForm: FunctionComponent = () => {
-  const [searchTerm, setSearchTerm] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('Search here');
   const [articleResults, setArticleResults] = useState<IArticle[] | null>(null);
   const [hasErrored, setHasErrored] = useState<boolean>(false);
 
-  useEffect(() => {
-    handleButtonClick();
-  });
-
-  const handleOnChange = () => {
-    setSearchTerm('');
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
   };
 
-  const handleButtonClick = async () => {
-    if (searchTerm) {
-      try {
-        const data = await getArticles(searchTerm);
-        setArticleResults(data.articles);
-      } catch (e) {
-        setHasErrored(true);
-      }
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const data = await getArticles(searchTerm);
+      setArticleResults(data.articles);
+    } catch (e) {
+      setHasErrored(true);
     }
   };
 
@@ -42,10 +39,10 @@ const SearchForm: FunctionComponent = () => {
       {hasErrored && (
         <h3>Sorry! We can't find that article, try searching again...</h3>
       )}
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>What news article can I get you?</label>
-        <input type="text" onChange={handleOnChange} />
-        <button onClick={handleButtonClick}>Search</button>
+        <input type="text" value={searchTerm} onChange={handleOnChange} />
+        <input type="submit" value="Search" />
       </form>
       {articleResults && <ResultsList list={articleResults} />}
     </section>
