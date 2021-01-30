@@ -85,24 +85,23 @@ const SearchForm: FunctionComponent = () => {
   };
 
   return (
-    <section>
+    <main>
       <h1>BT React Code Test - by Lindsay Foley - 28/1/21</h1>
+      <hr />
       {errorMessage && <h3>{errorMessage}</h3>}
       <form onSubmit={handleSubmit}>
-        <label>
-          What news article can I get you?
-          <input
-            type="text"
-            value={searchTerm}
-            placeholder="Search here"
-            onChange={handleOnChange}
-            required
-          />
-        </label>
+        <label>Start your search for a news article</label>
+        <input
+          type="text"
+          value={searchTerm}
+          placeholder="Enter article"
+          onChange={handleOnChange}
+          required
+        />
         <input type="submit" value="Search" />
       </form>
       {articleResults && !errorMessage && <ResultsList list={articleResults} />}
-    </section>
+    </main>
   );
 };
 
