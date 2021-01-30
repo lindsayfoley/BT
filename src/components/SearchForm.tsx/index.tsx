@@ -23,52 +23,54 @@ const getArticles = async (article: string) => {
 const SearchForm: FunctionComponent = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [articleResults, setArticleResults] = useState<IArticle[] | null>(null);
-  const [hasErrored, setHasErrored] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>(
-    EErrorMessage.Generic
-  );
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const validateData = (data: IResponseDataProps) => {
     const { status, totalResults } = data;
 
     if (status !== 'ok') {
       setErrorMessage(EErrorMessage.Generic);
-      setHasErrored(true);
     } else if (totalResults === 0) {
       setErrorMessage(EErrorMessage.NoResults);
-      setHasErrored(true);
+      setArticleResults(null);
     } else {
       setArticleResults(data.articles);
-      setHasErrored(false);
+    }
+  };
+
+  const validateSearchTerm = (term: string) => {
+    const validCharacters = new RegExp('[a-zA-Z0-9]');
+    const illegalCharacters = new RegExp('[<|>|(|)]');
+    const termIsInvalid = term.replace(/\s/g, '').length === 0;
+
+    const hasIllegalCharacters = illegalCharacters.test(term);
+    const hasOnlyInvalidCharacters = !validCharacters.test(term);
+    const isInvalidFirstCharacter =
+      term.length === 1 && !validCharacters.test(term);
+
+    if (hasIllegalCharacters) {
+      setErrorMessage(EErrorMessage.Illegal);
+      setArticleResults(null);
+      return;
+    }
+
+    if (termIsInvalid || isInvalidFirstCharacter || hasOnlyInvalidCharacters) {
+      setErrorMessage(EErrorMessage.Invalid);
+      setArticleResults(null);
+    } else {
+      setErrorMessage(null);
     }
   };
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const term = event.target.value;
-    validateSearchTerm(term);
-  };
-
-  const validateSearchTerm = (term: string) => {
-    const validCharacter = new RegExp('^[a-zA-Z0-9]');
-    const isInvalidFirstCharacter =
-      searchTerm.length === 0 && !validCharacter.test(term);
-    const termIsInvalid = term.replace(/\s/g, '').length === 0;
-
-    if (termIsInvalid || isInvalidFirstCharacter) {
-      setErrorMessage(EErrorMessage.Invalid);
-      setHasErrored(true);
-      setArticleResults(null);
-    } else {
-      setHasErrored(false);
-    }
-
-    setSearchTerm(term);
+    setSearchTerm(event.target.value);
+    validateSearchTerm(event.target.value);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (hasErrored) {
+    if (errorMessage) {
       return;
     }
 
@@ -79,14 +81,13 @@ const SearchForm: FunctionComponent = () => {
       validateData(data);
     } catch (e) {
       setErrorMessage(EErrorMessage.RejectedPromise);
-      setHasErrored(true);
     }
   };
 
   return (
     <section>
       <h1>BT React Code Test - by Lindsay Foley - 28/1/21</h1>
-      {hasErrored && <h3>{errorMessage}</h3>}
+      {errorMessage && <h3>{errorMessage}</h3>}
       <form onSubmit={handleSubmit}>
         <label>
           What news article can I get you?
@@ -100,7 +101,7 @@ const SearchForm: FunctionComponent = () => {
         </label>
         <input type="submit" value="Search" />
       </form>
-      {articleResults && !hasErrored && <ResultsList list={articleResults} />}
+      {articleResults && !errorMessage && <ResultsList list={articleResults} />}
     </section>
   );
 };

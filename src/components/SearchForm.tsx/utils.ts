@@ -13,6 +13,7 @@ export interface IResponseDataProps {
     Generic = 'Sorry an error has occurred',
     NoResults = 'Sorry no results were found',
     Invalid = 'Please enter a valid search term',
+    Illegal = 'The following characters are not allowed: <, >, ), (',
     RejectedPromise = 'Sorry, something went wrong, please try again later',
   }
   

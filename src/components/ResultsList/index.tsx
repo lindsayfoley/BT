@@ -12,7 +12,7 @@ const ResultsList: FunctionComponent<IResultsListProps> = ({ list }) => {
 
   return (
     <section>
-      <h2>Search results:</h2>
+      <h2>{`Showing ${list.length} results:`}</h2>
       {list.map((article, index) => (
         <ResultsCard {...article} key={`${article.title}-${index}`} />
       ))}
