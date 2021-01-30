@@ -8,7 +8,7 @@ export interface IArticle {
 
 const ResultsCard: FunctionComponent<IArticle> = (article: IArticle) => (
   <article key={article.title}>
-    <h2>{article.title}</h2>
+    <h3>{article.title}</h3>
     <span>{article.author}</span>
     <p>{article.description}</p>
   </article>

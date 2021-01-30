@@ -1,10 +1,18 @@
-import React, { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  FunctionComponent,
+  useState,
+} from 'react';
 import { IArticle } from '../ResultsCard';
 import ResultsList from '../ResultsList';
-
-const NEWS_API_URL = 'https://newsapi.org/v2/';
-const API_KEY = '11e41bf5c1b548a29424441eeeaf3906';
-const MAX_RESULTS = 10;
+import {
+  API_KEY,
+  EErrorMessage,
+  IResponseDataProps,
+  MAX_RESULTS,
+  NEWS_API_URL,
+} from './utils';
 
 const getArticles = async (article: string) => {
   const response = await fetch(
@@ -14,21 +22,63 @@ const getArticles = async (article: string) => {
 };
 
 const SearchForm: FunctionComponent = () => {
-  const [searchTerm, setSearchTerm] = useState<string>('Search here');
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [articleResults, setArticleResults] = useState<IArticle[] | null>(null);
   const [hasErrored, setHasErrored] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>(
+    EErrorMessage.Generic
+  );
+
+  const validateData = (data: IResponseDataProps) => {
+    const { status, totalResults } = data;
+
+    if (status !== 'ok') {
+      setErrorMessage(EErrorMessage.Generic);
+      setHasErrored(true);
+    } else if (totalResults === 0) {
+      setErrorMessage(EErrorMessage.NoResults);
+      setHasErrored(true);
+    } else {
+      setArticleResults(data.articles);
+      setHasErrored(false);
+    }
+  };
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    const term = event.target.value;
+    validateSearchTerm(term);
+  };
+
+  const validateSearchTerm = (term: string) => {
+    const validCharacter = new RegExp('^[a-zA-Z0-9]');
+    const isInvalidFirstCharacter = searchTerm.length === 0 && !validCharacter.test(term);
+    const termIsInvalid = term.replace(/\s/g, '').length === 0;
+
+    if (termIsInvalid || isInvalidFirstCharacter) {
+      setErrorMessage(EErrorMessage.Invalid);
+      setHasErrored(true);
+      setArticleResults(null);
+    } else {
+      setHasErrored(false);
+    }
+
+    setSearchTerm(term);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (hasErrored) {
+      return;
+    }
+
+    const term = encodeURIComponent(searchTerm.trim());
+
     try {
-      const data = await getArticles(searchTerm);
-      setArticleResults(data.articles);
+      const data = await getArticles(term);
+      validateData(data);
     } catch (e) {
+      setErrorMessage(EErrorMessage.RejectedPromise);
       setHasErrored(true);
     }
   };
@@ -36,15 +86,21 @@ const SearchForm: FunctionComponent = () => {
   return (
     <section>
       <h1>BT React Code Test - by Lindsay Foley - 28/1/21</h1>
-      {hasErrored && (
-        <h3>Sorry! We can't find that article, try searching again...</h3>
-      )}
+      {hasErrored && <h3>{errorMessage}</h3>}
       <form onSubmit={handleSubmit}>
-        <label>What news article can I get you?</label>
-        <input type="text" value={searchTerm} onChange={handleOnChange} />
+        <label>
+          What news article can I get you?
+          <input
+            type="text"
+            value={searchTerm}
+            placeholder="Search here"
+            onChange={handleOnChange}
+            required
+          />
+        </label>
         <input type="submit" value="Search" />
       </form>
-      {articleResults && <ResultsList list={articleResults} />}
+      {articleResults && !hasErrored && <ResultsList list={articleResults} />}
     </section>
   );
 };
