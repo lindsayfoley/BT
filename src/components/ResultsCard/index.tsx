@@ -23,7 +23,7 @@ const ResultsCard: FunctionComponent<IArticle> = (article: IArticle) => {
     author,
     description,
     publishedAt,
-    source: { name },
+    source: { name, id },
   } = article;
 
   const truncatedDescription = truncateText(description);
@@ -32,7 +32,7 @@ const ResultsCard: FunctionComponent<IArticle> = (article: IArticle) => {
     <>
       <article key={publishedAt}>
         <h3>{title}</h3>
-        <span>{author || name}</span>
+        <span>{author || name || id}</span>
         <p dangerouslySetInnerHTML={ {__html: truncatedDescription} } />
       </article>
       <hr />
