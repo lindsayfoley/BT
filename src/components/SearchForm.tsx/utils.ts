@@ -1,7 +1,6 @@
 import { IArticle } from "../ResultsCard";
 
 export const NEWS_API_URL = 'https://newsapi.org/v2/';
-export const API_KEY = '67f5a4ae3d664b1ebd598a22a24cceed';
 export const MAX_RESULTS = 10;
 
 export interface IResponseDataProps {

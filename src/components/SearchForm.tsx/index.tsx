@@ -7,7 +7,6 @@ import React, {
 import { IArticle } from '../ResultsCard';
 import ResultsList from '../ResultsList';
 import {
-  API_KEY,
   EErrorMessage,
   IResponseDataProps,
   MAX_RESULTS,
@@ -16,7 +15,7 @@ import {
 
 const getArticles = async (article: string) => {
   const response = await fetch(
-    `${NEWS_API_URL}everything?q=${article}&apiKey=${API_KEY}&pageSize=${MAX_RESULTS}`
+    `${NEWS_API_URL}everything?q=${article}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&pageSize=${MAX_RESULTS}`
   );
   return await response.json();
 };
@@ -51,7 +50,8 @@ const SearchForm: FunctionComponent = () => {
 
   const validateSearchTerm = (term: string) => {
     const validCharacter = new RegExp('^[a-zA-Z0-9]');
-    const isInvalidFirstCharacter = searchTerm.length === 0 && !validCharacter.test(term);
+    const isInvalidFirstCharacter =
+      searchTerm.length === 0 && !validCharacter.test(term);
     const termIsInvalid = term.replace(/\s/g, '').length === 0;
 
     if (termIsInvalid || isInvalidFirstCharacter) {
