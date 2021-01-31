@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SearchForm /> renders without crashing 1`] = `
+<main>
+  <h1>
+    BT React Code Test - by Lindsay Foley - 28/1/21
+  </h1>
+  <hr />
+  <form
+    onSubmit={[Function]}
+  >
+    <label
+      htmlFor="article-searchbox"
+    >
+      Start your search for a news article
+    </label>
+    <input
+      id="article-searchbox"
+      onChange={[Function]}
+      placeholder="Enter article"
+      required={true}
+      type="text"
+      value=""
+    />
+    <input
+      type="submit"
+      value="Submit search"
+    />
+  </form>
+</main>
+`;

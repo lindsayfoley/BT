@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "../src/components/Header.tsx";
-import Search from "./components/SearchForm.tsx";
-import Footer from "../src/components/Footer.tsx";
+import Header from "./components/Header";
+import Search from "./components/SearchForm";
+import Footer from "./components/Footer";
 
 function App() {
   return (

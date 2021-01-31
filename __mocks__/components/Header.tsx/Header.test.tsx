@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
-import Header from '../../../src/components/Header.tsx';
+import Header from '../../../src/components/Header';
 
 const setup = () => shallow(<Header />);
 

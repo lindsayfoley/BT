@@ -1,15 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ResultsList /> renders without crashing 1`] = `
-<section>
+<section
+  className="results"
+>
   <h2>
     Showing 2 results:
   </h2>
   <ResultsCard
     author="Brian Heater"
     description="You don’t need Qoobo in your life. Nobody needs Qoobo, exactly. In fact, first reactions tend to range from befuddlement to bemusement. The robotic cat pillow doesn’t make a ton of sense on the face of it — in part because Qoobo has no face."
-    key="2021-01-17T09:30:00-05:00"
-    publishedAt="2021-01-17T09:30:00-05:00"
+    key="2021-02-17T09:30:00-07:00"
+    publishedAt="2021-02-17T09:30:00-07:00"
     source={
       Object {
         "id": "123456",

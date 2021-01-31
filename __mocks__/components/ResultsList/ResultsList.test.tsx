@@ -9,7 +9,7 @@ export const mockArticleList: IArticle[] = [
     author: 'Brian Heater',
     description:
       'You don’t need Qoobo in your life. Nobody needs Qoobo, exactly. In fact, first reactions tend to range from befuddlement to bemusement. The robotic cat pillow doesn’t make a ton of sense on the face of it — in part because Qoobo has no face.',
-    publishedAt: '2021-01-17T09:30:00-05:00',
+    publishedAt: '2021-02-17T09:30:00-07:00',
     url:
       'https://techcrunch.com/2020/12/30/an-earnest-review-of-a-robotic-cat-pillow/',
     source: {

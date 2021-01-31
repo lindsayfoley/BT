@@ -11,7 +11,7 @@ const ResultsList: FunctionComponent<IResultsListProps> = ({ list }) => {
   }
 
   return (
-    <section>
+    <section className="results">
       <h2>{`Showing ${list.length} results:`}</h2>
       {list.map((article, index) => (
         <ResultsCard {...article} key={article.publishedAt} />

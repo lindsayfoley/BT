@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
-import Footer from '../../../src/components/Footer.tsx';
+import Footer from '../../../src/components/Footer';
 
 const setup = () => shallow(<Footer />);
 

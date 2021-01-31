@@ -6,19 +6,11 @@ import React, {
 } from 'react';
 import { IArticle } from '../ResultsCard';
 import ResultsList from '../ResultsList';
+import { getArticles } from './api';
 import {
   EErrorMessage,
-  IResponseDataProps,
-  MAX_RESULTS,
-  NEWS_API_URL,
+  IResponseDataProps
 } from './utils';
-
-const getArticles = async (article: string) => {
-  const response = await fetch(
-    `${NEWS_API_URL}everything?q=${article}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&pageSize=${MAX_RESULTS}`
-  );
-  return await response.json();
-};
 
 const SearchForm: FunctionComponent = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
