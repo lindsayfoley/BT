@@ -33,8 +33,8 @@ const SearchForm: FunctionComponent = () => {
   const validateSearchTerm = (term: string) => {
     const validCharacters = new RegExp('[a-zA-Z0-9]');
     const illegalCharacters = new RegExp('[<|>|(|)]');
-    const termIsInvalid = term.replace(/\s/g, '').length === 0;
 
+    const termIsInvalid = term.replace(/\s/g, '').length === 0;
     const hasIllegalCharacters = illegalCharacters.test(term);
     const hasOnlyInvalidCharacters = !validCharacters.test(term);
     const isInvalidFirstCharacter =

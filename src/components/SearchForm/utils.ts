@@ -1,8 +1,4 @@
 import { IArticle } from '../ResultsCard';
-
-export const NEWS_API_URL = 'https://newsapi.org/v2/';
-export const MAX_RESULTS = 10;
-
 export interface IResponseDataProps {
   status: string;
   totalResults: number;

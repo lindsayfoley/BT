@@ -9,12 +9,10 @@ import { EErrorMessage } from '../../../src/components/SearchForm/utils';
 
 jest.mock('../../../src/components/SearchForm/api');
 const mockGetArticles = getArticles as jest.MockedFunction<typeof getArticles>;
-
 const searchTerm = 'Pizza';
 const mockEvent = {
   target: { value: searchTerm },
 };
-
 const flushPromises = () => new Promise(setImmediate);
 
 const setup = (useMount: boolean = false) => {
@@ -37,7 +35,7 @@ describe('<SearchForm />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render a search form with all required fields', () => {
+  it('should render a form with all required fields', () => {
     expect(wrapper.find('label')).toHaveLength(1);
     expect(wrapper.find('#article-searchbox')).toHaveLength(1);
     expect(wrapper.find('input[type="submit"]')).toHaveLength(1);
