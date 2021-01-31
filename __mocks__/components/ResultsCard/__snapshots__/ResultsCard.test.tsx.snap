@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ResultsCard /> renders without crashing 1`] = `
+<Fragment>
+  <article
+    key="2021-01-17T09:30:00-05:00"
+  >
+    <h3>
+      An earnest review of a robotic cat pillow
+    </h3>
+    <span
+      className="author"
+    >
+      Brian Heater
+    </span>
+    <p>
+      <span
+        className="description"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "You don’t need Qoobo in your life. Nobody needs Qoobo, exactly. In fact, first reactions tend to range from befuddlement to bemusement. The robotic ca...",
+          }
+        }
+      />
+      <a
+        href="https://techcrunch.com/2020/12/30/an-earnest-review-of-a-robotic-cat-pillow/"
+        rel="noreferrer"
+        target="_blank"
+      >
+        read more &gt;
+      </a>
+    </p>
+  </article>
+  <hr />
+</Fragment>
+`;

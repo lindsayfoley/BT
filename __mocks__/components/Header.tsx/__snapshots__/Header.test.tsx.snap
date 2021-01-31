@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header /> renders without crashing 1`] = `
+<header>
+  <img
+    alt="BT logo"
+    src="/images/bt-logo.jpg"
+  />
+</header>
+`;

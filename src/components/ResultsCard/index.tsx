@@ -12,9 +12,8 @@ export interface IArticle {
   source: ISource;
 }
 
-const CHARACTER_LIMIT = 150;
-
-const truncateText = (text: string) => `${text.slice(0, CHARACTER_LIMIT)}...`;
+export const CHARACTER_LIMIT = 150;
+export const truncateText = (text: string) => `${text.slice(0, CHARACTER_LIMIT)}...`;
 
 const ResultsCard: FunctionComponent<IArticle> = (article: IArticle) => {
   const {
@@ -32,9 +31,9 @@ const ResultsCard: FunctionComponent<IArticle> = (article: IArticle) => {
     <>
       <article key={publishedAt}>
         <h3>{title}</h3>
-        <span>{author || name || id}</span>
+        <span className="author">{author || name || id}</span>
         <p>
-          <span dangerouslySetInnerHTML={{ __html: truncatedDescription }} />
+          <span className="description" dangerouslySetInnerHTML={{ __html: truncatedDescription }} />
           <a target="_blank" rel="noreferrer" href={url}>
             read more &gt;
           </a>

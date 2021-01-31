@@ -1,48 +1,40 @@
-import { FunctionComponent } from 'react';
-interface ISource {
-  id: string;
-  name: string;
-}
-export interface IArticle {
-  title: string;
-  author: string;
-  description: string;
-  publishedAt: string;
-  url: string;
-  source: ISource;
-}
+import React from 'react';
+import { shallow, render} from 'enzyme';
+import ResultsCard, { IArticle, CHARACTER_LIMIT, truncateText } from '../../../src/components/ResultsCard';
+import { mockArticleList } from '../ResultsList/ResultsList.test';
 
-const CHARACTER_LIMIT = 150;
+const mockArticle = mockArticleList[0];
 
-const truncateText = (text: string) => `${text.slice(0, CHARACTER_LIMIT)}...`;
+const setup = (useRender: boolean = false) => {
+  if (useRender) {
+    return render(<ResultsCard {...mockArticle} />);
+  }
 
-const ResultsCard: FunctionComponent<IArticle> = (article: IArticle) => {
-  const {
-    title,
-    author,
-    description,
-    publishedAt,
-    url,
-    source: { name, id },
-  } = article;
-
-  const truncatedDescription = truncateText(description);
-
-  return (
-    <>
-      <article key={publishedAt}>
-        <h3>{title}</h3>
-        <span>{author || name || id}</span>
-        <p>
-          <span dangerouslySetInnerHTML={{ __html: truncatedDescription }} />
-          <a target="_blank" rel="noreferrer" href={url}>
-            read more &gt;
-          </a>
-        </p>
-      </article>
-      <hr />
-    </>
-  );
+  return shallow(<ResultsCard {...mockArticle} />);
 };
 
-export default ResultsCard;
+describe('<ResultsCard />', () => {
+  let wrapper;
+  
+  it('renders without crashing', () => {
+    wrapper = setup();
+    expect(wrapper.isEmptyRender()).toBe(false);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it(`should truncate the description to ${CHARACTER_LIMIT} words and add an ellipsis`, () => {
+    wrapper = setup(true);
+    expect(wrapper.find('.description').text()).toContain(truncateText(mockArticle.description));
+    expect(wrapper.find('.description').text()).toContain('...');
+  });
+
+  it('should render an article with all required details', () => {
+    wrapper = setup();
+    expect(wrapper.find('article')).toHaveLength(1);
+    expect(wrapper.find('h3').text()).toContain(mockArticle.title);
+    expect(wrapper.find('.author').text()).toContain(mockArticle.author);
+    expect(wrapper.find('.description')).toHaveLength(1);
+    expect(wrapper.find('a').last().prop('href')).toContain(mockArticle.url);
+    expect(wrapper.find('hr')).toHaveLength(1);
+  });
+});

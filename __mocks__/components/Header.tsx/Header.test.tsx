@@ -1,9 +1,10 @@
+import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
-import Footer from './index';
+import Header from '../../../src/components/Header.tsx';
 
-const setup = () => shallow(<Footer />);
+const setup = () => shallow(<Header />);
 
-describe('<Footer />', () => {
+describe('<Header />', () => {
   let wrapper: ShallowWrapper;
 
   beforeEach(() => {
@@ -15,8 +16,7 @@ describe('<Footer />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('renders the Titles children', () => {
-    expect(wrapper.find('footer').exists()).toBeTruthy();
-    expect(wrapper.find('small').text()).toBeTruthy();
+  it('should render a logo', () => {
+    expect(wrapper.find('img')).toHaveLength(1);
   });
 });

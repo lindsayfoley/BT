@@ -16,7 +16,7 @@ describe('<Footer />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('renders text in footer', () => {
-    expect(wrapper.find('small').text()).toBeTruthy();
+  it('should render small print in footer', () => {
+    expect(wrapper.find('small')).toHaveLength(1);
   });
 });
