@@ -4,17 +4,17 @@ module.exports = {
     '!**/*.d.ts',
     '!**/node_modules/**',
   ],
-  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
-  testPathIgnorePatterns: ['/node_modules/', '/.next/'],
+  setupFilesAfterEnv: ['<rootDir>setupTests.js'],
+  testPathIgnorePatterns: ['<rootDir>node_modules/', '/.next/'],
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': '../node_modules/babel-jest'
+    '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>node_modules/babel-jest'
   },
   transformIgnorePatterns: [
     '/node_modules/',
     '^.+\\.module\\.scss$',
   ],
   moduleNameMapper: {
-    '\\.scss$': '<rootDir>/__mocks__/SCSSStub.js',
+    '\\.scss$': '<rootDir>__mocks__/SCSSStub.js',
   },
   snapshotSerializers: ["enzyme-to-json/serializer"]
 }
