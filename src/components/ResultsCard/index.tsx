@@ -25,7 +25,7 @@ const ResultsCard: FunctionComponent<IArticle> = (article: IArticle) => {
     source: { name, id },
   } = article;
 
-  const truncatedDescription = truncateText(description);
+  const truncatedDescription = description && truncateText(description);
 
   return (
     <>

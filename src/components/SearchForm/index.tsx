@@ -80,7 +80,7 @@ const SearchForm: FunctionComponent = () => {
     <main>
       <h1>BT React Code Test - by Lindsay Foley - 28/1/21</h1>
       <hr />
-      {errorMessage && <h3>{errorMessage}</h3>}
+      {errorMessage && <h3 className="error">{errorMessage}</h3>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="article-searchbox">Start your search for a news article</label>
         <input
