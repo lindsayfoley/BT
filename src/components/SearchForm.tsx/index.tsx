@@ -90,15 +90,16 @@ const SearchForm: FunctionComponent = () => {
       <hr />
       {errorMessage && <h3>{errorMessage}</h3>}
       <form onSubmit={handleSubmit}>
-        <label>Start your search for a news article</label>
+        <label htmlFor="article-searchbox">Start your search for a news article</label>
         <input
+          id="article-searchbox"
           type="text"
           value={searchTerm}
           placeholder="Enter article"
           onChange={handleOnChange}
           required
         />
-        <input type="submit" value="Search" />
+        <input type="submit" value="Submit search" />
       </form>
       {articleResults && !errorMessage && <ResultsList list={articleResults} />}
     </main>
