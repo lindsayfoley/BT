@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import SearchForm from '../../../src/components/SearchForm';
 import { getArticles } from '../../../src/components/SearchForm/api';
 import { mockArticleList } from '../ResultsList/ResultsList.test';
@@ -15,16 +15,10 @@ const mockEvent = {
 };
 const flushPromises = () => new Promise(setImmediate);
 
-const setup = (useMount: boolean = false) => {
-  if (useMount) {
-    return mount(<SearchForm />);
-  }
-
-  return shallow(<SearchForm />);
-};
+const setup = () => shallow(<SearchForm />);
 
 describe('<SearchForm />', () => {
-  let wrapper: ShallowWrapper | ReactWrapper;
+  let wrapper: ShallowWrapper;
 
   beforeEach(() => {
     wrapper = setup();
@@ -55,7 +49,6 @@ describe('<SearchForm />', () => {
     });
 
     it('should render search results when the promise to fetch is resolved', async () => {
-      wrapper = setup(true);
       expect(wrapper.find(ResultsList).exists()).toBeFalsy();
       act(() => {
         wrapper.find('#article-searchbox').simulate('change', mockEvent);
@@ -73,7 +66,6 @@ describe('<SearchForm />', () => {
 
   describe('when the search is unsuccessful', () => {
     it('should display an error message if the promise rejects', async () => {
-      wrapper = setup(true);
       act(() => {
         wrapper.find('#article-searchbox').simulate('change', mockEvent);
         mockGetArticles.mockRejectedValue(new Error('Async error'));
@@ -88,7 +80,6 @@ describe('<SearchForm />', () => {
     });
 
     it('should display an error message if no results are returned for the search term', async () => {
-      wrapper = setup(true);
       act(() => {
         wrapper.find('#article-searchbox').simulate('change', mockEvent);
         mockGetArticles.mockResolvedValue({
@@ -104,7 +95,6 @@ describe('<SearchForm />', () => {
     });
 
     it('should display an generic error message if the the returned status is not "ok"', async () => {
-      wrapper = setup(true);
       act(() => {
         wrapper.find('#article-searchbox').simulate('change', mockEvent);
         mockGetArticles.mockResolvedValue({
